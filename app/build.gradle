@@ -3,10 +3,10 @@ plugins {
     id 'kotlin-android'
 }
 
-apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-kapt' // algumas bibliotecas precisam desse plugin
 apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'kotlin-parcelize'
+apply plugin: "androidx.navigation.safeargs" // para podermnos passar objetos, parâmetros, argmentos para outras telas
+apply plugin: 'kotlin-parcelize' // nos permitirá serializar e decerializar objetos e classes kotlin, data class
 
 android {
     compileSdkVersion 31
