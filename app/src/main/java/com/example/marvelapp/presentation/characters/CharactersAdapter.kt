@@ -6,18 +6,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.core.domain.model.Character
 
-//class CharactersAdapter : PagingDataAdapter<Character, CharactersViewHolder>(diffCallback) {
-class CharactersAdapter : ListAdapter<Character, CharactersViewHolder>(diffCallback) {
+class CharactersAdapter : PagingDataAdapter<Character, CharactersViewHolder>(diffCallback) {
+//class CharactersAdapter : ListAdapter<Character, CharactersViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: CharactersViewHolder, position: Int) {
-//        getItem(position)?.let {
-//            holder.bind(it)
-//        }
-        holder.bind(getItem(position))
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     companion object {
