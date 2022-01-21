@@ -17,6 +17,15 @@ android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\CarlosJunior\\StudioProjects\\curso-android-marvel-app\\store\\marvel_app_key_store.jks')
+            storePassword 'marvel@1234'
+            keyAlias 'marvel-app'
+            keyPassword 'marvel@1234'
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.marvelapp"
         minSdkVersion 23
@@ -32,8 +41,21 @@ android {
     }
 
     buildTypes {
-        release {
-            minifyEnabled false
+        debug { //permitido ser debugado em desenvolvimento
+            applicationIdSuffix '.debug'
+            debuggable true
+        }
+        staging { //pré-produção para teste antes de produção (versão para os testadores)
+            initWith debug
+            minifyEnabled true
+            applicationIdSuffix '.staging'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro',
+                    'proguard-rules-staging.pro'
+        }
+        release { //versão produção
+            signingConfig signingConfigs.release
+            minifyEnabled true //habilita a ofuscação
+            shrinkResources true //reduz o tamanho do aplicativo eliminando recursos não utilizados
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -97,10 +119,7 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences:1.0.0-rc02"
 
     // Unit tests
-    testImplementation 'junit:junit:4.13.1'
-    testImplementation "androidx.arch.core:core-testing:2.1.0"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
-    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+    testImplementation project(":testing")
     testImplementation "androidx.room:room-testing:$room_version"
 
     // Instrumentation tests
